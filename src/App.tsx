@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
+import useAction from './hooks/useAction';
+import ShoppingForm from './components/ShoppingForm';
+import ShoppingList from './components/ShoppingList';
 
 function App() {
+  const action = useAction();
+
+  useEffect(()=> {
+    action.getList();
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ShoppingForm add={action.add} />
+      <ShoppingList 
+        list={action.state.list} 
+        edit={action.edit} 
+        remove={action.remove} />
     </div>
   );
 }
