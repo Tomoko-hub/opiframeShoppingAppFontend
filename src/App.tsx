@@ -3,6 +3,8 @@ import './App.css';
 import useAction from './hooks/useAction';
 import ShoppingForm from './components/ShoppingForm';
 import ShoppingList from './components/ShoppingList';
+import {Routes,Route,Navigate} from 'react-router-dom';
+import Navbar from './components/Navbar';
 
 function App() {
   const action = useAction();
@@ -13,11 +15,20 @@ function App() {
 
   return (
     <div className="App">
-      <ShoppingForm add={action.add} />
-      <ShoppingList 
-        list={action.state.list} 
-        edit={action.edit} 
-        remove={action.remove} />
+      <Navbar />
+      <Routes>
+        <Route path='/' 
+               element={<ShoppingList 
+               list={action.state.list} 
+               edit={action.edit} 
+               remove={action.remove} />}
+         />
+        <Route path='/form' 
+               element={<ShoppingForm add={action.add} />}
+         />
+        <Route path='*' element={<Navigate to="/" />}
+         />
+      </Routes>
     </div>
   );
 }
